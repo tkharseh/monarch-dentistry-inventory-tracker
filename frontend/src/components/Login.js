@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import HomeNavBar from "./HomeNavBar";
 import items from "../table_data/items";
+import { USERNAME, PASSWORD } from "./SECRETS";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
@@ -9,7 +10,7 @@ function LoginPage() {
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
-    if (username === "samer" && password === "kharseh") {
+    if (username === USERNAME && password === PASSWORD) {
       const auth = { id: 1, authorized: true };
       fetch("http://localhost:3000/loginData/1", {
         method: "PUT",
@@ -27,7 +28,7 @@ function LoginPage() {
   });
 
   const handleSubmit = () => {
-    if (username === "samer" && password === "kharseh") {
+    if (username === USERNAME && password === PASSWORD) {
       setValidLogin(true);
     } else {
       setValidLogin(false);
