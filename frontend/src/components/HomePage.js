@@ -44,6 +44,15 @@ const HomePage = () => {
           />
         </div>
       </div>
+      <div class="grid place-content-center pb-12">
+        <h1>
+          Made with 💙 by{" "}
+          <a href="https://www.tariqkharseh.com" target="_blank" class='text-blue-500 underline'>
+            {" "}
+            Tariq Kharseh
+          </a>
+        </h1>
+      </div>
     </div>
   );
 };
