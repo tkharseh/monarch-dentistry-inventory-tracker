@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import HomeNavBar from "./HomeNavBar";
-import items from "../table_data/items";
+
 import { USERNAME, PASSWORD } from "./SECRETS";
 
 function LoginPage() {
@@ -9,39 +9,40 @@ function LoginPage() {
   const [validLogin, setValidLogin] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  useEffect(() => {
-    if (username === USERNAME && password === PASSWORD) {
-      const auth = { id: 1, authorized: true };
-      fetch("http://localhost:3000/loginData/1", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(auth),
-      });
-    } else {
-      const auth = { id: 1, authorized: false };
-      fetch("http://localhost:3000/loginData/1", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(auth),
-      });
-    }
-  });
+  // useEffect(() => {
+  //   if (username === USERNAME && password === PASSWORD) {
+  //     const auth = { id: 1, authorized: true };
+  //     fetch("http://localhost:3000/loginData/1", {
+  //       method: "PUT",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(auth),
+  //     });
+  //   } else {
+  //     const auth = { id: 1, authorized: false };
+  //     fetch("http://localhost:3000/loginData/1", {
+  //       method: "PUT",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(auth),
+  //     });
+  //   }
+  // });
 
   const handleSubmit = () => {
     if (username === USERNAME && password === PASSWORD) {
       setValidLogin(true);
+      console.log("correct");
     } else {
       setValidLogin(false);
     }
-    const auth = {
-      id: 1,
-      authorized: items.loginData[0].authorized,
-    };
-    fetch("http://localhost:3000/loginData/1", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(auth),
-    });
+    // const auth = {
+    //   id: 1,
+    //   authorized: items.loginData[0].authorized,
+    // };
+    // fetch("http://localhost:3000/loginData/1", {
+    //   method: "PUT",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify(auth),
+    // });
     setSubmitted(true);
   };
 
@@ -77,7 +78,7 @@ function LoginPage() {
             <a
               type="submit"
               onClick={handleSubmit}
-              href={validLogin && items.loginData[0].authorized && "/inventory"}
+              href={validLogin && "/inventory"}
               class="mt-4 px-4 py-3 leading-6 text-base rounded-md border border-transparent text-white focus:outline-none bg-blue-500 hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer inline-flex items-center w-full justify-center items-center font-medium focus:outline-none"
             >
               Login

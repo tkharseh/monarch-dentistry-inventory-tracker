@@ -12,7 +12,14 @@ import GoodStatus from "./GoodStatus";
 import BadStatus from "./BadStatus";
 import InventoryModal from "./InventoryModal";
 import OrderModal from "./OrderModal";
-import items from "../table_data/items";
+import TableIcons from "./TableIcons";
+import ClearIcon from "@mui/icons-material/Clear";
+import axios from "axios";
+import DeleteItemModal from "./DeleteItemModal";
+import EditItemNameModal from "./EditItemNameModal";
+import EditItemUomModal from "./EditItemUomModal";
+import EditItemInventoryModal from "./EditItemInventoryModal";
+import EditItemOrderModal from "./EditItemOrderModal";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -33,51 +40,83 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
-
-export default function CustomizedTables({ table_title, rows }) {
-  const [showInventoryModal, setShowInventoryModal] = useState(false);
-  const [showOrderModal, setShowOrderModal] = useState(false);
-
-  const [selectedItemId, setSelectedItemId] = useState();
-  const [selectedItemCustomId, setSelectedItemCustomId] = useState();
-  const [selectedItemName, setSelectedItemName] = useState("");
-  const [selectedItemUom, setSelectedItemUom] = useState();
-  const [selectedItemInventory, setSelectedItemInventory] = useState();
-  const [selectedItemOrder, setSelectedItemOrder] = useState();
-
+export default function Tables({
+  type,
+  table_id,
+  table_num,
+  table_title,
+  rows,
+}) {
+  const [selectedItem, setSelectedItem] = useState({});
+  const [showEditItemOrderModal, setShowEditItemOrderModal] = useState(false);
+  const [showEditItemInventoryModal, setShowEditItemInventoryModal] =
+    useState(false);
+  const [showEditItemUomModal, setShowEditItemUomModal] = useState(false);
+  const [showEditItemNameModal, setShowEditItemNameModal] = useState(false);
+  const [showDeleteItemModal, setShowDeleteItemModal] = useState(false);
   return (
     <div>
-      <InventoryModal
-        showInventoryModal={showInventoryModal}
-        setShowInventoryModal={setShowInventoryModal}
-        open={showInventoryModal}
+      <EditItemOrderModal
+        selectedItem={selectedItem}
+        tableId={table_id}
+        setShowEditItemOrderModal={setShowEditItemOrderModal}
+        open={showEditItemOrderModal}
         onClose={() => {
-          setShowInventoryModal(false);
+          setShowEditItemOrderModal(false);
         }}
-        id={selectedItemId}
-        customId={selectedItemCustomId}
-        order={selectedItemOrder}
-        name={selectedItemName}
-        uom={selectedItemUom}
       />
-      <OrderModal
-        showOrderModal={showOrderModal}
-        setShowOrderModal={setShowOrderModal}
-        open={showOrderModal}
+      <EditItemInventoryModal
+        selectedItem={selectedItem}
+        tableId={table_id}
+        setShowEditItemInventoryModal={setShowEditItemInventoryModal}
+        open={showEditItemInventoryModal}
         onClose={() => {
-          setShowOrderModal(false);
+          setShowEditItemInventoryModal(false);
         }}
-        id={selectedItemId}
-        inventory={selectedItemInventory}
-        customId={selectedItemCustomId}
-        name={selectedItemName}
-        uom={selectedItemUom}
+      />
+      <EditItemUomModal
+        selectedItem={selectedItem}
+        tableId={table_id}
+        setShowEditItemUomModal={setShowEditItemUomModal}
+        open={showEditItemUomModal}
+        onClose={() => {
+          setShowEditItemUomModal(false);
+        }}
+      />
+      <EditItemNameModal
+        selectedItem={selectedItem}
+        tableId={table_id}
+        setShowEditItemNameModal={setShowEditItemNameModal}
+        open={showEditItemNameModal}
+        onClose={() => {
+          setShowEditItemNameModal(false);
+        }}
+      />
+      <DeleteItemModal
+        selectedItem={selectedItem}
+        selectedTableId={table_id}
+        setShowDeleteItemModal={setShowDeleteItemModal}
+        open={showDeleteItemModal}
+        onClose={() => {
+          setShowDeleteItemModal(false);
+        }}
       />
       <TableContainer component={Paper} class="pb-9">
         <div class="bg-white drop-shadow-xl outline outline-black rounded-md overflow-x-auto">
-          <h1 class="text-black justify-left pl-4 pt-5 text-4xl py-2 rounded w-auto">
-            {table_title}
-          </h1>
+          <div class="flex items-center justify-between">
+            <h1 class="text-black justify-left pl-4 pt-5 text-4xl py-2 rounded w-auto">
+              {table_num + ". " + table_title}
+            </h1>
+            {type != "orderPage" && (
+              <TableIcons
+                class="pt-9"
+                tableNum={table_num}
+                tableName={table_title}
+                tableRows={rows}
+                tableId={table_id}
+              />
+            )}
+          </div>
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
@@ -99,67 +138,114 @@ export default function CustomizedTables({ table_title, rows }) {
                 <TableCell style={{ fontWeight: "bold" }} align="center">
                   Order
                 </TableCell>
+                <TableCell
+                  style={{ fontWeight: "bold" }}
+                  align="center"
+                ></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
+              {rows.map((row, index) => (
                 <StyledTableRow key={row.name}>
                   <StyledTableCell align="center">
-                    {items.items[row.itemId - 1].customId}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    {items.items[row.itemId - 1].name}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    {items.items[row.itemId - 1].inventory >=
-                      10 && (
-                      <GoodStatus />
-                    )}
-                    {items.items[row.itemId - 1].inventory <
-                      10 && (
-                      <BadStatus />
-                    )}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    {items.items[row.itemId - 1].uom}
+                    {table_num + "." + (index + 1)}
                   </StyledTableCell>
                   <StyledTableCell align="center">
                     <button
-                      customId={row.customId}
-                      name={row.customId + " inventory"}
-                      class="p-2 w-12 bg-transparent hover:bg-neutral-200 text-center"
+                      class="px-5 py-2 bg-transparent hover:bg-neutral-200 text-center"
                       onClick={() => {
-                        setSelectedItemCustomId(
-                          items.items[row.itemId - 1].customId
-                        );
-                        setSelectedItemName(items.items[row.itemId - 1].name);
-                        setSelectedItemUom(items.items[row.itemId - 1].uom);
-                        setSelectedItemId(items.items[row.itemId - 1].id);
-                        setSelectedItemOrder(items.items[row.itemId - 1].order);
-                        setShowInventoryModal(true);
+                        setSelectedItem({
+                          id: row._id,
+                          dynamicId: table_num + "." + (index + 1),
+                          name: row.name,
+                          uom: row.uom,
+                          inventory: row.inventory,
+                          order: row.order,
+                        });
+                        setShowEditItemNameModal(true);
                       }}
                     >
-                      {items.items[row.itemId - 1].inventory}
+                      {row.name}
+                    </button>
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.inventory >= 10 && <GoodStatus />}
+                    {row.inventory < 10 && <BadStatus />}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    <button
+                      onClick={() => {
+                        setSelectedItem({
+                          id: row._id,
+                          dynamicId: table_num + "." + (index + 1),
+                          name: row.name,
+                          uom: row.uom,
+                          inventory: row.inventory,
+                          order: row.order,
+                        });
+                        setShowEditItemUomModal(true);
+                      }}
+                      class="px-5 py-2 bg-transparent hover:bg-neutral-200 text-center"
+                    >
+                      {row.uom}
                     </button>
                   </StyledTableCell>
                   <StyledTableCell align="center">
                     <button
-                      customId={row.customId}
-                      name={row.customId + " order"}
-                      class="p-2 w-12 bg-transparent hover:bg-neutral-200 text-center"
+                      class="px-5 py-2 bg-transparent hover:bg-neutral-200 text-center"
                       onClick={() => {
-                        setSelectedItemCustomId(
-                          items.items[row.itemId - 1].customId
-                        );
-                        setSelectedItemName(items.items[row.itemId - 1].name);
-                        setSelectedItemUom(items.items[row.itemId - 1].uom);
-                        setSelectedItemId(items.items[row.itemId - 1].id);
-                        setSelectedItemInventory(items.items[row.itemId - 1].inventory);
-                        setShowOrderModal(true);
+                        setSelectedItem({
+                          id: row._id,
+                          dynamicId: table_num + "." + (index + 1),
+                          name: row.name,
+                          uom: row.uom,
+                          inventory: row.inventory,
+                          order: row.order,
+                        });
+                        setShowEditItemInventoryModal(true);
                       }}
                     >
-                      {items.items[row.itemId - 1].order}
+                      {row.inventory}
                     </button>
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    <button
+                      class="px-5 py-2 bg-transparent hover:bg-neutral-200 text-center"
+                      onClick={() => {
+                        setSelectedItem({
+                          id: row._id,
+                          dynamicId: table_num + "." + (index + 1),
+                          name: row.name,
+                          uom: row.uom,
+                          inventory: row.inventory,
+                          order: row.order,
+                        });
+                        setShowEditItemOrderModal(true);
+                      }}
+                    >
+                      {row.order}
+                    </button>
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    <ClearIcon
+                      sx={{
+                        "&:hover": {
+                          color: "red",
+                        },
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        setSelectedItem({
+                          id: row._id,
+                          dynamicId: table_num + "." + (index + 1),
+                          name: row.name,
+                          uom: row.uom,
+                          inventory: row.inventory,
+                          order: row.order,
+                        });
+                        setShowDeleteItemModal(true);
+                      }}
+                    />
                   </StyledTableCell>
                 </StyledTableRow>
               ))}
