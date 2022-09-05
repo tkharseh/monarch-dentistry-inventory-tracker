@@ -24,7 +24,7 @@ export default function LandingPage() {
               href="/contact"
               class="text-2xl outline p-4 rounded-lg flex items-center hover:bg-slate-100"
             >
-              <h1 class="pr-4">Book a demo</h1> <ArrowForwardIcon />
+              <h1 class="pr-4">Contact Us</h1> <ArrowForwardIcon />
             </a>
           </div>
         </div>

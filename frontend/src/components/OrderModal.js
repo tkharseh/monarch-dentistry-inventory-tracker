@@ -1,7 +1,7 @@
 import ReactDom from "react-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
-import items from "../table_data/items";
+
 
 const MODAL_STYLES = {
   position: "fixed",
@@ -12,6 +12,8 @@ const MODAL_STYLES = {
   padding: "25px",
   zIndex: 1000,
   borderRadius: "15px",
+  maxHeight: "75%",
+  overflow: "auto",
 };
 
 const OVERLAY_STYLES = {
@@ -74,7 +76,6 @@ export default function OrderModal({
               autoFocus
               onChange={(e) => setOrder(e.target.value)}
               class="border border-black text-center p-2 w-24"
-              placeholder={items.items[id - 1].order}
               min="0"
             ></input>
           </div>
