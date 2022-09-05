@@ -5,7 +5,7 @@ import tablesRoutes from "./routes/tables.js";
 import dotenv from "dotenv";
 
 const app = express();
-dotenv.config({path: '.env'})
+dotenv.config({ path: ".env" });
 app.use(cors());
 app.use(express.json());
 app.use("/tables", tablesRoutes);
@@ -21,7 +21,9 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    app.listen(PORT, '0.0.0.0', () => console.log(`Server running on port ${PORT}`));
+    app.listen(PORT, "0.0.0.0", () =>
+      console.log(`Server running on port ${PORT}`)
+    );
   })
   .catch((error) => console.log(error.message));
 
