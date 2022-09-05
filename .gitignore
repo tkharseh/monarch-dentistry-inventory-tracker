@@ -2,4 +2,3 @@ node_modules
 frontend/src/components/SECRETS.js
 backend/.env
 frontend/build
-.gitignore
