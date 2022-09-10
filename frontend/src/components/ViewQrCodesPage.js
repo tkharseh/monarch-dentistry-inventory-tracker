@@ -36,7 +36,7 @@ export default function ViewQrCodesPage() {
   useEffect(() => {
     const currItemQrCodes = new Array(selectedItems.length).fill("");
     for (let i = 0; i < selectedItems.length; i++) {
-      const itemUrl = `http://localhost:3000/inventory/${tableId}/${String(
+      const itemUrl = `http://inventori-app.netlify.app/inventory/${tableId}/${String(
         selectedItems[i]._id
       )}`;
       currItemQrCodes[i] = itemUrl;
