@@ -33,7 +33,7 @@ export default function UpdateInventoryPage() {
   useEffect(() => {
     if (hasSubmitted && submittedCode === PASSCODE) {
       axios.patch(
-        `https://inventori-project.herokuapp.com/tables/${tableId}/${itemId}`,
+        `https://monarch-dentistry-inventory-tracker.onrender.com/tables/${tableId}/${itemId}`,
         updatedItem
       );
     }
@@ -51,7 +51,7 @@ export default function UpdateInventoryPage() {
     async function fetchData() {
       try {
         const itemData = await axios.get(
-          `https://inventori-project.herokuapp.com/tables/${tableId}/${itemId}`
+          `https://monarch-dentistry-inventory-tracker.onrender.com/tables/${tableId}/${itemId}`
         );
         setItem(itemData.data[0]);
       } catch (err) {}

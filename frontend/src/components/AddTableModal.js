@@ -35,7 +35,7 @@ export default function AddTableModal({
   const [tableName, setTableName] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("https://inventori-project.herokuapp.com/tables/", {tableName: tableName})
+    axios.post("https://monarch-dentistry-inventory-tracker.onrender.com/tables/", {tableName: tableName})
     setShowAddTableModal(false);
   };
 

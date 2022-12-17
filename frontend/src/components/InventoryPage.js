@@ -19,11 +19,11 @@ function InventoryPage() {
     async function fetchData() {
       try {
         const inventoryData = [];
-        const resTables = await axios.get("https://inventori-project.herokuapp.com/tables/");
+        const resTables = await axios.get("https://monarch-dentistry-inventory-tracker.onrender.com/tables/");
         const tables = resTables.data;
         for (let i = 0; i < tables.length; i++) {
           const resItems = await axios.get(
-            `https://inventori-project.herokuapp.com/tables/${String(tables[i]._id)}`
+            `https://monarch-dentistry-inventory-tracker.onrender.com/tables/${String(tables[i]._id)}`
           );
           const items = resItems.data;
           const tableData = {

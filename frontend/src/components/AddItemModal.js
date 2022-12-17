@@ -46,7 +46,7 @@ export default function AddItemModal({
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post(`https://inventori-project.herokuapp.com/tables/${tableId}`, itemData);
+    axios.post(`https://monarch-dentistry-inventory-tracker.onrender.com/tables/${tableId}`, itemData);
     setShowAddItemModal(false);
   };
 

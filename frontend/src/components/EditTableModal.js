@@ -37,7 +37,7 @@ export default function EditTableModal({
   const [newTableName, setNewTableName] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.patch(`https://inventori-project.herokuapp.com/tables/${tableId}`, {
+    axios.patch(`https://monarch-dentistry-inventory-tracker.onrender.com/tables/${tableId}`, {
       tableName: newTableName,
     });
     setShowEditTableModal(false);

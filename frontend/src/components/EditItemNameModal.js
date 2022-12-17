@@ -47,7 +47,7 @@ export default function EditItemNameModal({
     console.log(updatedItem)
     console.log(tableId)
     console.log(id)
-    axios.patch(`https://inventori-project.herokuapp.com/tables/${tableId}/${String(id)}`, updatedItem);
+    axios.patch(`https://monarch-dentistry-inventory-tracker.onrender.com/tables/${tableId}/${String(id)}`, updatedItem);
     setShowEditItemNameModal(false);
   };
 

@@ -36,7 +36,7 @@ export default function DeleteTableModal({
 }) {
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.delete(`https://inventori-project.herokuapp.com/tables/${tableId}`);
+    axios.delete(`https://monarch-dentistry-inventory-tracker.onrender.com/tables/${tableId}`);
     setShowDeleteTableModal(false);
   };
 

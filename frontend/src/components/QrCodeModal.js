@@ -52,7 +52,7 @@ export default function QrCodeModal({
     async function fetchData() {
       try {
         const result = await axios.get(
-          `https://inventori-project.herokuapp.com/tables/${tableId}`
+          `https://monarch-dentistry-inventory-tracker.onrender.com/tables/${tableId}`
         );
         const rows = result.data;
         setTableRows(rows);

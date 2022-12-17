@@ -45,7 +45,7 @@ export default function EditItemOrderModal({
       order: newItemOrder,
     };
     axios.patch(
-      `https://inventori-project.herokuapp.com/tables/${tableId}/${String(id)}`,
+      `https://monarch-dentistry-inventory-tracker.onrender.com/tables/${tableId}/${String(id)}`,
       updatedItem
     );
     setShowEditItemOrderModal(false);
